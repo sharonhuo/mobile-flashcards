@@ -4,7 +4,7 @@ import { addDeck } from '../actions';
 import { submitDeck } from '../utils/api';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-import { purple, white } from '../utils/colors';
+import styles from './style';
 
 class AddDect extends Component {
   state = {
@@ -46,7 +46,7 @@ class AddDect extends Component {
           placeholder="Deck title"
           placeholderTextColor="#9a73ef"
           autoCapitalize="none"
-          value={this.state.title} 
+          value={this.state.title}
           onChangeText={this.handleTitle} />
 
         <TouchableOpacity
@@ -58,56 +58,6 @@ class AddDect extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 23
-  },
-  input: {
-    margin: 15,
-    height: 40,
-    borderColor: '#7a42f4',
-    borderWidth: 1,
-  },
-  iosSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginTop: 20,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-  },
-  titleText: {
-    fontSize: 28,
-    textAlign: 'center',
-    paddingTop: 20,
-    paddingBottom: 20
-  }
-})
 
 export default connect(null, { addDeck })(AddDect);
 

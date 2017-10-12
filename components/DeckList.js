@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { receieveDecks } from "../actions";
 import { getAllDecks } from '../utils/api';
 import { AppLoading } from 'expo';
-import { white } from '../utils/colors';
+import styles from './style';
 
 class DeckList extends Component {
 
@@ -28,7 +28,7 @@ class DeckList extends Component {
         }
 
         return (
-            <View style={styles.container}>
+            <View style={styles.containerList}>
                 {decks !== null && Object.keys(decks).map((key) => {
                     const { title, questions } = decks[key];
                     const numOfQuestions = questions === undefined ? 0 : questions.length;
@@ -50,34 +50,6 @@ class DeckList extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: white
-    },
-    item: {
-        backgroundColor: white,
-        borderRadius: Platform.OS === 'ios' ? 16 : 2,
-        padding: 20,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 17,
-        justifyContent: 'center',
-        shadowRadius: 3,
-        shadowOpacity: 0.8,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-    },
-    deckText: {
-        fontSize: 20,
-        textAlign: 'center'
-    }
-});
 
 function mapStateToProps(decks) {
     return {

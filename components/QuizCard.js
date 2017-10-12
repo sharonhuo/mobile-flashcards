@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { green, white, red } from "../utils/colors"
 import { fetchDeck } from "../actions";
 import TextButton from "./TextButton";
 import { clearLocalNotification, setLocalNotification } from "../utils/api";
+import styles from './style';
 
 class QuizCard extends Component {
+
     static navigationOptions = ({ navigation }) => {
         return {
             //     headerLeft: null,
@@ -19,7 +21,8 @@ class QuizCard extends Component {
             questionAnswered: 0,
             showQuestion: true,
             numOfCorrectAnswer: 0
-        }
+        };
+        this.toggle = this.toggle.bind(this);
     }
 
     componentDidMount() {
@@ -46,7 +49,7 @@ class QuizCard extends Component {
                     <Text style={{ fontSize: 20, textAlign: 'center', paddingTop: 50 }}>{answerText}</Text>}
 
                 {currentQuestion !== undefined &&
-                    <TextButton style={{ margin: 20 }} onPress={this.toggle.bind(this)}>
+                    <TextButton style={{ margin: 20 }} onPress={this.toggle}>
                         {this.state.showQuestion ? 'Show answer' : 'Show question'}
                     </TextButton>
                 }
@@ -75,7 +78,7 @@ class QuizCard extends Component {
         )
     }
 
-    renderRouterButtons(title) {
+    renderRouterButtons(title, totQuestions) {
         return (
             <View>
                 <TouchableOpacity
@@ -89,7 +92,10 @@ class QuizCard extends Component {
                     style={Platform.OS === 'ios' ? styles.iosCorrectBtn : styles.AndroidCorrectBtn}
                     onPress={() => this.props.navigation.navigate(
                         'DeckDetail',
-                        { entryId: title })}>
+                        {
+                            entryId: title,
+                            numCards: totQuestions
+                        })}>
                     <Text style={styles.deckText}>Back to Deck</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -134,7 +140,7 @@ class QuizCard extends Component {
         const score = this.state.numOfCorrectAnswer == 0 ? 0 :
             Math.round((this.state.numOfCorrectAnswer / currentDeck.questions.length * 100) * 10) / 10;
         return (
-            <View style={styles.container}>
+            <View style={styles.containerList}>
                 {currentDeck.questions.length === 0 &&
                     <Text>Please add card first.</Text>
                 }
@@ -148,70 +154,13 @@ class QuizCard extends Component {
                 }
 
                 {currentDeck.questions.length !== 0 && this.state.questionAnswered === currentDeck.questions.length &&
-                    this.renderRouterButtons(title)}
+                    this.renderRouterButtons(title, totQuestions)}
 
             </View>
 
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: white
-    },
-    card: {
-        flexDirection: 'column',
-        marginTop: 12
-    },
-    deckText: {
-        fontSize: 20,
-        textAlign: 'center',
-        color: white,
-    },
-    iosCorrectBtn: {
-        backgroundColor: green,
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginTop: 20,
-        marginLeft: 40,
-        marginRight: 40,
-    },
-    AndroidCorrectBtn: {
-        backgroundColor: green,
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        height: 45,
-        borderRadius: 2,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    iosInorrectBtn: {
-        backgroundColor: red,
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginTop: 20,
-        marginLeft: 40,
-        marginRight: 40,
-    },
-    AndroidIncorrectBtn: {
-        backgroundColor: red,
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        height: 45,
-        borderRadius: 2,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-})
 
 function mapStateToProps(decks) {
     return {

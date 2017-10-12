@@ -4,6 +4,7 @@ import { gray, purple, white } from '../utils/colors';
 import { addCard } from '../actions';
 import { submitCard } from '../utils/api';
 import { connect } from 'react-redux';
+import styles from './style';
 
 class DeckCard extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -84,55 +85,6 @@ class DeckCard extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    metric: {
-        flexDirection: 'row',
-        marginTop: 12
-    },
-    deckText: {
-        fontSize: 20,
-        textAlign: 'center'
-    },
-    input: {
-        margin: 15,
-        height: 40,
-        borderColor: '#7a42f4',
-        borderWidth: 1,
-    },
-    iosSubmitBtn: {
-        backgroundColor: purple,
-        padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginTop: 20,
-        marginLeft: 40,
-        marginRight: 40,
-    },
-    AndroidSubmitBtn: {
-        backgroundColor: purple,
-        padding: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
-        height: 45,
-        borderRadius: 2,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    submitBtnText: {
-        color: white,
-        fontSize: 22,
-        textAlign: 'center',
-    },
-    center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 30,
-        marginRight: 30,
-    },
-})
 
 function mapStateToProps(decks) {
     return {
